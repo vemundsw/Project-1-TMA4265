@@ -4,7 +4,6 @@ import random
 
 
 # Our transition probabilites
-
 alfa = 0.005
 beta = 0.01
 gamma = 0.10
@@ -103,7 +102,30 @@ def confidence_interval95():
         days_per_year = calculate_days_per_year(chain)
         num_days_list[i] = days_per_year
 
-    for i in num_days_list
+    average = sum(num_days_list)/len(num_days_list)
+    SD = 0
+
+    for simulation in num_days_list:
+        SD += (simulation - average)**2
+
+    SD = np.sqrt(1/( n-1 ) * SD)     # Standard deviation
+
+    #Critical value for the student t-distribution. 
+    # 29 degrees of freedom
+    # 95 % confidence interval: alfa = 0.025  (Blir dette riktig måte å skrive det på. To forskjellige alfaer?)
+    t_95_29 = 2.045    
+
+    upper_limit = average + SD/np.sqrt(n) * t_95_29
+    lower_limiit = average - SD/np.sqrt(n) * t_95_29
+
+    return upper_limit, lower_limiit
+
+print(confidence_interval95())
+
+
+        
+
+        
 
 
 
