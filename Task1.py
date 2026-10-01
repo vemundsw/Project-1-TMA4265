@@ -48,7 +48,7 @@ def MonteCarlo(N = N, alfa = alfa, beta = beta, gamma = gamma):
 
     return chain
 
-def calculate_average(chain):
+def calculate_days_per_year(chain):
     # Calculates the average number of days per year spent in a state
 
     # Input:
@@ -58,12 +58,14 @@ def calculate_average(chain):
     # Calculates the average number of days per year spent in a state, as a list. 
 
     years = len(chain)/365    #Number of years in N days.
-    average_spent = [sum(chain == 0)/years, sum(chain == 1)/years, sum(chain == 2)/years]
-    return average_spent
+    days_per_year = [sum(chain == 0)/years, sum(chain == 1)/years, sum(chain == 2)/years]
+    return days_per_year
+
 
 
 
 def plotting(N, chain, states =["S", "I", "R"]):
+    # A helping tool, to visualise the transitions.
 
     chain_states = [states[i] for i in chain]
 
@@ -76,38 +78,41 @@ def plotting(N, chain, states =["S", "I", "R"]):
     print(f"Probability of being in I: {prob_I}")
     print(f"Probability of being in R: {prob_R}")
 
-    print(f"Probability of being in S: {prob_S}")
-    print(f"Probability of being in I: {prob_I}")
-    print(f"Probability of being in R: {prob_R}")
-    plt.step(range(N), chain_states)
 
+    plt.step(range(N), chain_states)
     plt.ylabel("States")
     plt.yticks([0,1,2], states)
     plt.xlabel("timesteps")
     plt.show()
 
 
-# def AverageMontecarlo(n = 30):
+def confidence_interval95():
+    # Calculates the 95% confidence interval for the mean number of days per year spent in each states.
+    # We always use 30 simulations, as the student t-quantile depends on degrees of freedom.
 
-#     state_dict = {}
-#     state_dict["S"] = []
-#     state_dict["I"] = []
-#     state_dict["R"] = []
+    # Input:
+    
+    # Output:
+    #   95% confidence interval for the expected value.
+
+    n = 30     # Number of simulations
+    num_days_list = np.zeros(n)
+
+    for i in range(n):
+        chain =  MonteCarlo()
+        days_per_year = calculate_days_per_year(chain)
+        num_days_list[i] = days_per_year
+
+    for i in num_days_list
 
 
-#     for i in range(n):
-#         chain =  MonteCarlo()
-#         limiting_distribution = [np.mean(chain[3650:] == 0), np.mean(chain[3650:] == 1), np.mean(chain[3650:] == 2)]
-#         distribution_list.append(limiting_distribution)
 
-#     print(distribution_list)
 
-# AverageMontecarlo()
+# a = MonteCarlo(7300)
 
-a = MonteCarlo(7300)
+# print(calculate_average(a))
 
-print(calculate_average(a))
-
+# plotting(N, MonteCarlo())
 
 
 
