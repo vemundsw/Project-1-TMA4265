@@ -120,15 +120,22 @@ def confidence_interval95():
 
     return lower_limit, upper_limit
 
-print(confidence_interval95())
 
 
+# Here are the funcitons we can call:
 
-# a = MonteCarlo(7300)
+# # Return the Markov chain
+# MonteCarlo(7300)
 
-# print(calculate_average(a))
 
-# plotting(N, MonteCarlo())
+# # Plot the Markov chain.
+# plotting(7300, MonteCarlo())
+
+
+# # Print the confidence interval: Lower and upper bounds for the average,
+# print(confidence_interval95())
+
+
 
 
 
