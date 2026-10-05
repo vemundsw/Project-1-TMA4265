@@ -95,7 +95,7 @@ def confidence_interval95():
     #   95% confidence interval for the expected value.
 
     n = 30     # Number of simulations
-    num_days_list = np.zeros(n)
+    num_days_list = np.zeros((n, 3))
 
     for i in range(n):
         chain =  MonteCarlo()
@@ -116,17 +116,11 @@ def confidence_interval95():
     t_95_29 = 2.045    
 
     upper_limit = average + SD/np.sqrt(n) * t_95_29
-    lower_limiit = average - SD/np.sqrt(n) * t_95_29
+    lower_limit = average - SD/np.sqrt(n) * t_95_29
 
-    return upper_limit, lower_limiit
+    return lower_limit, upper_limit
 
 print(confidence_interval95())
-
-
-        
-
-        
-
 
 
 
