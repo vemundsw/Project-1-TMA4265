@@ -50,11 +50,11 @@ plt.legend()
 
 
 #task f
-def simulate_multiple_outbreaks(N_sim = 1000):
+def simulate_multiple_outbreaks(N_sim = 1000, function = simulate_outbreak):
     history_max_infect = np.zeros((N_sim, 2), dtype=int)
 
     for i in range(N_sim):
-        history_i = simulate_outbreak()
+        history_i = function()
         max_day_i = np.argmax(history_i[:, 1])
         max_infected_i = history_i[:, 1][max_day_i]
 
@@ -78,3 +78,35 @@ mean_infect_day_val, infect_day_CI, infect_val_CI = simulate_multiple_outbreaks(
 print(mean_infect_day_val)
 print(infect_val_CI)
 print(infect_day_CI)
+
+
+#task g
+fig, axes = plt.subplots(2, 2, figsize=(10, 7), sharex=True, sharey=True)
+
+for ax, vaccinated in zip(axes.flat, [0, 100, 600, 800]):
+    history = simulate_outbreak(
+        current_state=np.array([950 - vaccinated, 50, 0])
+    )
+
+    ax.plot(history, label=["S", "I", "R"])
+
+    means, day_CI, infected_CI = simulate_multiple_outbreaks(
+    function=lambda: simulate_outbreak(
+        current_state=np.array([950 - vaccinated, 50, 0])
+    )
+    )
+
+    ax.set_title(
+        f"{vaccinated} vaccinated\n"
+        f"Expected peak: {means[1]:.1f} infected\n"
+        f"Expected first peak day: {means[0]:.1f}"
+    )
+
+    ax.set_xlabel("Day")
+    ax.set_ylabel("Number of individuals")
+    ax.legend()
+
+plt.tight_layout()
+plt.show()
+
+
