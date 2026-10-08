@@ -31,9 +31,8 @@ for i in range(N):
     z = 0
     
     # Simulate from the exponential distribution and count realizations
-    # until until time lapsed becomes too long
+    # until time lapsed becomes too long
     while time < 59:
-    
             x += 1
             time += exp_quantile(np.random.uniform(0, 1, 1))
 
@@ -46,7 +45,7 @@ for i in range(N):
     
 prob /= N
 
-print(f"The estimated probability of the total claim amount exceeding 8 mill kr is {round(prob, 4)}")
+print(f"The estimated probability of the total claim amount exceeding 8 mill kr is {round(prob, 5)}")
 
 
 ### Part 2 
