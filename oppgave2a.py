@@ -34,7 +34,7 @@ print(f"The probability of more than 100 claims is {round(prob, 4)}")
 
 
 ### Part 2
-def exp_quantile(u, rate = 1.5):
+def exp_quantile(u: np.array, rate: float = 1.5):
     """
     The inverse of the Cumulative Distribution Function for 
     the exponential distribution 
@@ -46,7 +46,7 @@ def exp_quantile(u, rate = 1.5):
     """
     return -1 / rate * np.log(1 - u)
 
-N = 10000
+N = 1000
 prob_b = 0
 
 
@@ -54,9 +54,9 @@ for j in range(N):
 
     # Drawing 100 realizations from the exponential distribution 
     # and checking whether they occur within 59 days
-    time = np.sum(exp_quantile(np.random.uniform(0, 1, 100)))
+    time = np.sum(exp_quantile(np.random.uniform(0, 1, 101)))
 
-    if time < 59: 
+    if time <= 59: 
         prob_b += 1
 
 prob_b /= N
